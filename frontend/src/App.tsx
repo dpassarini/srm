@@ -7,12 +7,16 @@ import {
   simulateOperation, 
   createOperation, 
   getOperations,
+  getSettlementReports,
+  createSettlementReport,
+  getReportDownloadUrl,
   type Currency,
   type ReceivableType,
   type ExchangeRate,
   type ReceivableInput,
   type CalculatedOperation,
-  type OperationHistoryItem
+  type OperationHistoryItem,
+  type SettlementReport
 } from "./services/api";
 import { 
   Calculator, 
@@ -28,12 +32,13 @@ import {
   AlertTriangle,
   ChevronDown,
   ChevronUp,
-  FileText
+  FileText,
+  Download
 } from "lucide-react";
 
 export default function App() {
   // Navigation
-  const [activeTab, setActiveTab] = useState<"simulator" | "history" | "rates">("simulator");
+  const [activeTab, setActiveTab] = useState<"simulator" | "history" | "rates" | "reports">("simulator");
 
   // Metadata from API
   const [currencies, setCurrencies] = useState<Currency[]>([]);
@@ -48,6 +53,13 @@ export default function App() {
     { identifier: "TIT-01", face_value: 1000, due_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0], receivable_type_code: "duplicata", currency_code: "BRL" }
   ]);
   const [simulationResult, setSimulationResult] = useState<CalculatedOperation | null>(null);
+
+  // Reports State
+  const [reports, setReports] = useState<SettlementReport[]>([]);
+  const [reportAssignee, setReportAssignee] = useState("");
+  const [reportCurrency, setReportCurrency] = useState("");
+  const [reportStartDate, setReportStartDate] = useState("");
+  const [reportEndDate, setReportEndDate] = useState("");
 
   // UI state
   const [loading, setLoading] = useState(false);
@@ -97,6 +109,55 @@ export default function App() {
   useEffect(() => {
     loadMetadata();
   }, []);
+
+  // Load Settlement Reports list
+  const loadReportsList = async () => {
+    try {
+      const data = await getSettlementReports();
+      setReports(data);
+    } catch (err: any) {
+      console.error("Erro ao carregar relatórios", err);
+    }
+  };
+
+  // Poll reports when reports tab is active
+  useEffect(() => {
+    if (activeTab !== "reports") return;
+    loadReportsList();
+
+    const interval = setInterval(() => {
+      loadReportsList();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [activeTab]);
+
+  const handleCreateReport = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrorMsg(null);
+    setSuccessMsg(null);
+
+    try {
+      await createSettlementReport({
+        assignee_filter: reportAssignee,
+        payment_currency_code_filter: reportCurrency || undefined,
+        start_date_filter: reportStartDate || undefined,
+        end_date_filter: reportEndDate || undefined
+      });
+      setSuccessMsg("Relatório solicitado! O processamento foi iniciado em segundo plano.");
+      loadReportsList();
+      // Clear filters
+      setReportAssignee("");
+      setReportCurrency("");
+      setReportStartDate("");
+      setReportEndDate("");
+    } catch (err: any) {
+      setErrorMsg(err.response?.data?.error || "Erro ao solicitar relatório.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Fetch History on Tab Active or page/filter change
   const fetchHistory = useCallback(async () => {
@@ -340,7 +401,7 @@ export default function App() {
       )}
 
       {/* Tabs Menu */}
-      <nav className="flex gap-2 mb-8 bg-slate-900/60 p-1 rounded-xl border border-slate-800/80 max-w-md">
+      <nav className="flex gap-2 mb-8 bg-slate-900/60 p-1 rounded-xl border border-slate-800/80 max-w-xl">
         <button
           onClick={() => { setActiveTab("simulator"); setErrorMsg(null); setSuccessMsg(null); }}
           className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-semibold transition-all duration-200 ${
@@ -373,6 +434,17 @@ export default function App() {
         >
           <TrendingUp className="h-4 w-4" />
           Câmbio
+        </button>
+        <button
+          onClick={() => { setActiveTab("reports"); setErrorMsg(null); setSuccessMsg(null); loadReportsList(); }}
+          className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-semibold transition-all duration-200 ${
+            activeTab === "reports" 
+              ? "bg-blue-600 text-white shadow-md shadow-blue-500/10" 
+              : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
+          }`}
+        >
+          <FileText className="h-4 w-4" />
+          Extratos
         </button>
       </nav>
 
@@ -967,6 +1039,178 @@ export default function App() {
                         <tr>
                           <td colSpan={4} className="py-8 text-center text-slate-600 font-medium font-sans">
                             Nenhuma taxa cambial registrada.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Reports View */}
+        {activeTab === "reports" && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            {/* Request report form column */}
+            <div className="glass-panel glass-panel-glow rounded-3xl p-6 md:p-8 space-y-6">
+              <h3 className="text-lg font-bold text-slate-100 flex items-center gap-2">
+                <FileText className="h-5 w-5 text-blue-400" />
+                Novo Extrato de Liquidação
+              </h3>
+
+              <form onSubmit={handleCreateReport} className="space-y-5">
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Cedente</label>
+                  <input
+                    type="text"
+                    placeholder="Filtrar por cedente"
+                    value={reportAssignee}
+                    onChange={e => setReportAssignee(e.target.value)}
+                    className="w-full bg-slate-900/90 border border-slate-800 focus:border-blue-500 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Moeda de Pagamento</label>
+                  <select
+                    value={reportCurrency}
+                    onChange={e => setReportCurrency(e.target.value)}
+                    className="w-full bg-slate-900/90 border border-slate-800 focus:border-blue-500 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none cursor-pointer font-semibold"
+                  >
+                    <option value="">Todas</option>
+                    {currencies.map(c => (
+                      <option key={c.id} value={c.code}>{c.code}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Data Início</label>
+                  <input
+                    type="date"
+                    value={reportStartDate}
+                    onChange={e => setReportStartDate(e.target.value)}
+                    className="w-full bg-slate-900/90 border border-slate-800 focus:border-blue-500 rounded-lg px-3 py-1.5 text-xs text-slate-100 focus:outline-none cursor-pointer"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Data Fim</label>
+                  <input
+                    type="date"
+                    value={reportEndDate}
+                    onChange={e => setReportEndDate(e.target.value)}
+                    className="w-full bg-slate-900/90 border border-slate-800 focus:border-blue-500 rounded-lg px-3 py-1.5 text-xs text-slate-100 focus:outline-none cursor-pointer"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 px-4 rounded-xl shadow-md shadow-blue-500/10 transition-colors duration-200 text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  {loading ? (
+                    <RefreshCw className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Plus className="h-4 w-4" />
+                  )}
+                  Solicitar Extrato (CSV)
+                </button>
+              </form>
+            </div>
+
+            {/* Reports list column */}
+            <div className="lg:col-span-2 glass-panel glass-panel-glow rounded-3xl p-6 md:p-8 space-y-4">
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-bold text-slate-100">Fila de Relatórios</h3>
+                <button
+                  onClick={loadReportsList}
+                  className="text-slate-400 hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-800/40 transition-colors"
+                  title="Atualizar lista"
+                >
+                  <RefreshCw className="h-4 w-4" />
+                </button>
+              </div>
+              
+              <div className="border border-slate-850 rounded-2xl overflow-hidden bg-slate-950/20">
+                <div className="overflow-x-auto max-h-[380px] overflow-y-auto">
+                  <table className="w-full text-left border-collapse text-xs font-mono">
+                    <thead>
+                      <tr className="bg-slate-900/40 border-b border-slate-800 text-[10px] font-bold text-slate-400 uppercase tracking-wider font-sans">
+                        <th className="py-3 px-4">Arquivo</th>
+                        <th className="py-3 px-4">Filtros</th>
+                        <th className="py-3 px-4 text-center">Status</th>
+                        <th className="py-3 px-4 text-center">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody className="font-sans text-slate-300">
+                      {reports.map(rep => {
+                        const filtersText = [
+                          rep.assignee_filter ? `Cedente: ${rep.assignee_filter}` : null,
+                          rep.payment_currency_code_filter ? `Moeda: ${rep.payment_currency_code_filter}` : null,
+                          rep.start_date_filter ? `De: ${rep.start_date_filter}` : null,
+                          rep.end_date_filter ? `Até: ${rep.end_date_filter}` : null
+                        ].filter(Boolean).join(" | ") || "Sem filtros";
+
+                        return (
+                          <tr key={rep.id} className="border-b border-slate-900/40 hover:bg-slate-900/20 transition-colors">
+                            <td className="py-3 px-4">
+                              <span className="font-semibold text-slate-200 block">{rep.file_name}</span>
+                              <span className="text-[10px] text-slate-500 font-mono mt-0.5 block">
+                                {new Date(rep.created_at).toLocaleString("pt-BR")}
+                              </span>
+                            </td>
+                            <td className="py-3 px-4 text-xs text-slate-400 max-w-[200px] truncate" title={filtersText}>
+                              {filtersText}
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              {rep.status === "completed" && (
+                                <span className="px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold rounded-lg uppercase tracking-wider">
+                                  Concluído
+                                </span>
+                              )}
+                              {rep.status === "processing" && (
+                                <span className="px-2 py-0.5 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[10px] font-bold rounded-lg uppercase tracking-wider animate-pulse">
+                                  Processando
+                                </span>
+                              )}
+                              {rep.status === "pending" && (
+                                <span className="px-2 py-0.5 bg-blue-500/10 border border-blue-500/30 text-blue-400 text-[10px] font-bold rounded-lg uppercase tracking-wider">
+                                  Pendente
+                                </span>
+                              )}
+                              {rep.status === "failed" && (
+                                <span className="px-2 py-0.5 bg-red-500/10 border border-red-500/30 text-red-400 text-[10px] font-bold rounded-lg uppercase tracking-wider">
+                                  Falhou
+                                </span>
+                              )}
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              {rep.status === "completed" ? (
+                                <a
+                                  href={getReportDownloadUrl(rep.id)}
+                                  download={rep.file_name}
+                                  className="inline-flex items-center gap-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition-colors cursor-pointer shadow-md shadow-emerald-500/10"
+                                >
+                                  <Download className="h-3.5 w-3.5" />
+                                  Baixar CSV
+                                </a>
+                              ) : rep.status === "failed" ? (
+                                <span className="text-slate-500 text-xs">—</span>
+                              ) : (
+                                <RefreshCw className="h-4 w-4 text-blue-400 animate-spin mx-auto" />
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      })}
+
+                      {reports.length === 0 && (
+                        <tr>
+                          <td colSpan={4} className="py-8 text-center text-slate-500 font-medium">
+                            Nenhum relatório solicitado ainda.
                           </td>
                         </tr>
                       )}

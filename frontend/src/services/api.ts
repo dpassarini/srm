@@ -186,3 +186,40 @@ export const getOperations = async (
   });
   return response.data;
 };
+
+export interface SettlementReportInput {
+  assignee_filter?: string;
+  payment_currency_code_filter?: string;
+  start_date_filter?: string;
+  end_date_filter?: string;
+}
+
+export interface SettlementReport {
+  id: number;
+  assignee_filter: string | null;
+  payment_currency_code_filter: string | null;
+  start_date_filter: string | null;
+  end_date_filter: string | null;
+  status: string;
+  file_name: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export const getSettlementReports = async (): Promise<SettlementReport[]> => {
+  const response = await api.get<SettlementReport[]>("/settlement_reports");
+  return response.data;
+};
+
+export const createSettlementReport = async (
+  payload: SettlementReportInput
+): Promise<SettlementReport> => {
+  const response = await api.post<SettlementReport>("/settlement_reports", {
+    settlement_report: payload,
+  });
+  return response.data;
+};
+
+export const getReportDownloadUrl = (reportId: number): string => {
+  return `${api.defaults.baseURL}/settlement_reports/${reportId}/download`;
+};
