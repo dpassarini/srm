@@ -4,13 +4,6 @@ RSpec.describe "Settlement Reports API", type: :request do
   include ActiveJob::TestHelper
 
   before do
-    Receivable.delete_all
-    Operation.delete_all
-    ExchangeRate.delete_all
-    ReceivableType.delete_all
-    Currency.delete_all
-    SettlementReport.delete_all
-
     @brl = Currency.create!(code: "BRL", name: "Real", symbol: "R$")
     @duplicata = ReceivableType.create!(name: "Duplicata Mercantil", code: "duplicata", base_spread: 0.0150)
 

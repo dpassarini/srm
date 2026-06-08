@@ -3,12 +3,6 @@ require "rails_helper"
 RSpec.describe PricingEngine::Calculator, type: :service do
   before do
     # Clean the database completely before each test
-    Receivable.delete_all
-    Operation.delete_all
-    ExchangeRate.delete_all
-    ReceivableType.delete_all
-    Currency.delete_all
-
     @brl = Currency.create!(code: "BRL", name: "Real", symbol: "R$")
     @usd = Currency.create!(code: "USD", name: "Dollar", symbol: "$")
 

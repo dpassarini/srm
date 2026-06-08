@@ -2,13 +2,6 @@ require "rails_helper"
 
 RSpec.describe GenerateSettlementReportJob, type: :job do
   before do
-    Receivable.delete_all
-    Operation.delete_all
-    ExchangeRate.delete_all
-    ReceivableType.delete_all
-    Currency.delete_all
-    SettlementReport.delete_all
-
     @brl = Currency.create!(code: "BRL", name: "Real", symbol: "R$")
     @duplicata = ReceivableType.create!(name: "Duplicata Mercantil", code: "duplicata", base_spread: 0.0150)
 
@@ -54,7 +47,9 @@ RSpec.describe GenerateSettlementReportJob, type: :job do
         file_name: "extrato_teste.csv"
       )
 
-      allow_any_instance_of(Reports::SettlementReportQuery).to receive(:execute).and_raise(StandardError.new("Query error"))
+      query_double = instance_double(Reports::SettlementReportQuery)
+      allow(Reports::SettlementReportQuery).to receive(:new).and_return(query_double)
+      allow(query_double).to receive(:execute).and_raise(StandardError.new("Query error"))
 
       expect {
         described_class.new.perform(report.id)
