@@ -36,6 +36,7 @@ erDiagram
         bigint id PK
         string assignee "Nome do Cedente"
         bigint payment_currency_id FK
+        string status "pending, processing, liquidated, failed"
         decimal total_face_value "Precisão 18,4"
         decimal total_net_value "Precisão 18,4"
         datetime created_at
@@ -55,6 +56,19 @@ erDiagram
         decimal spread_applied "Precisão 6,4"
         decimal base_rate_applied "Precisão 6,4"
         decimal exchange_rate_applied "Precisão 18,8 (Opcional)"
+        datetime created_at
+        datetime updated_at
+    }
+
+    SETTLEMENT_REPORTS {
+        bigint id PK
+        string assignee_filter "Filtro opcional de cedente"
+        string payment_currency_code_filter "Filtro opcional de moeda de pagamento"
+        string start_date_filter "Filtro opcional de data inicial"
+        string end_date_filter "Filtro opcional de data final"
+        string file_name "Nome gerado para o arquivo CSV"
+        string status "pending, processing, completed, failed"
+        text csv_content "Conteúdo CSV gerado para download"
         datetime created_at
         datetime updated_at
     }
