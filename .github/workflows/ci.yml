@@ -7,6 +7,29 @@ on:
     branches: [ main, master, development ]
 
 jobs:
+  lint:
+    name: Run RuboCop Lint
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: credit_engine
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '4.0.5'
+          bundler-cache: true
+          working-directory: credit_engine
+
+      - name: Run RuboCop
+        run: |
+          bundle exec rubocop
+
   test:
     name: Run RSpec Tests
     runs-on: ubuntu-latest

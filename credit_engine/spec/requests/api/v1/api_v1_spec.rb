@@ -25,7 +25,7 @@ RSpec.describe "API V1 Endpoints", type: :request do
       expect(response).to have_http_status(:success)
       json = JSON.parse(response.body)
       expect(json.length).to eq(2)
-      expect(json.map { |c| c["code"] }.sort).to eq(["BRL", "USD"])
+      expect(json.map { |c| c["code"] }.sort).to eq([ "BRL", "USD" ])
     end
   end
 
@@ -35,7 +35,7 @@ RSpec.describe "API V1 Endpoints", type: :request do
       expect(response).to have_http_status(:success)
       json = JSON.parse(response.body)
       expect(json.length).to eq(2)
-      expect(json.map { |rt| rt["code"] }.sort).to eq(["cheque", "duplicata"])
+      expect(json.map { |rt| rt["code"] }.sort).to eq([ "cheque", "duplicata" ])
     end
   end
 
@@ -81,7 +81,7 @@ RSpec.describe "API V1 Endpoints", type: :request do
             receivables: receivables_payload
           }
         }
-      }.not_to change { [Operation.count, Receivable.count] }
+      }.not_to change { [ Operation.count, Receivable.count ] }
 
       expect(response).to have_http_status(:success)
       json = JSON.parse(response.body)
@@ -137,7 +137,7 @@ RSpec.describe "API V1 Endpoints", type: :request do
             receivables: receivables_payload
           }
         }
-      }.not_to change { [Operation.count, Receivable.count] }
+      }.not_to change { [ Operation.count, Receivable.count ] }
 
       expect(response).to have_http_status(:unprocessable_entity)
     end
