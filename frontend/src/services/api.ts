@@ -80,6 +80,7 @@ export interface OperationHistoryItem {
   assignee: string;
   total_face_value: string;
   total_net_value: string;
+  status: string;
   created_at: string;
   payment_currency: {
     code: string;

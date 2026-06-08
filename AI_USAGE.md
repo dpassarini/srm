@@ -12,6 +12,8 @@ Este documento descreve como a inteligência artificial foi utilizada como co-pi
     *   *Prompt:* "Como implementar o padrão de projeto Strategy em Ruby on Rails de forma que possamos calcular o deságio composto de recebíveis com spreads cadastrados de forma flexível no banco de dados e resolver taxas cross-currency de forma resiliente?"
 *   **Refatoração de Configurações do Docker:**
     *   *Prompt:* "Corrija o erro 'Error: in 18+, these Docker images are configured to store database data in a format which is compatible with pg_ctlcluster' no PostgreSQL 18 ao usar o Docker Compose."
+*   **Processamento Assíncrono com Sidekiq:**
+    *   *Prompt:* "Configure o Sidekiq no Docker Compose junto com o Rails para que a liquidação de lotes de recebíveis aconteça de forma assíncrona, definindo os serviços web e worker de forma isolada."
 
 ---
 
@@ -25,6 +27,13 @@ Durante a codificação, o co-piloto cometeu alguns deslizes importantes que exi
 2.  **Ambiente de Execução do RSpec no Docker Compose:**
     *   *Problema:* Ao executar testes do RSpec dentro do container, as requisições de request specs falhavam com `403 Forbidden` devido a `Blocked Host: www.example.com`.
     *   *Correção:* O container do Docker Compose roda sob `RAILS_ENV=development` por padrão. Isso fez com que o RSpec herdasse o ambiente de desenvolvimento onde o middleware de `HostAuthorization` está ativo. Foi corrigido limpando e permitindo o host no arquivo `config/environments/test.rb` e executando o RSpec com o prefixo de ambiente explícito: `env RAILS_ENV=test bundle exec rspec`.
+3.  **Gotcha de Autosave de Associações do ActiveRecord em Transações/Savepoints:**
+    *   *Problema:* Ao rodar os testes da liquidação assíncrona, se um recebível inválido causasse a falha da liquidação e o rollback da transação (SAVEPOINT), a cache em memória da associação `operation.receivables` continuava populada com os recebíveis válidos processados antes do erro. Ao executar `operation.update!(status: 'failed')` no bloco de captura de erros, o Rails tentava salvar novamente os recebíveis em memória, reinserindo-os no banco de dados.
+    *   *Correção:* Atualização do tratamento de erro no job para utilizar `operation.update_column(:status, "failed")`, que realiza uma alteração SQL direta no banco de dados, evitando callbacks de autosave do ActiveRecord.
+4.  **Integração de Fila no Ambiente de Testes:**
+    *   *Problema:* Configurar o Active Job globalmente para usar o Sidekiq fez com que os testes de integração do RSpec tentassem se conectar ao Redis real para executar os jobs, quebrando os blocos de teste com `perform_enqueued_jobs`.
+    *   *Correção:* Definição explícita de `config.active_job.queue_adapter = :test` em `config/environments/test.rb`.
+
 
 ---
 

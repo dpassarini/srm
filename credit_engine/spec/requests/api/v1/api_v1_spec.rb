@@ -19,6 +19,8 @@ RSpec.describe "API V1 Endpoints", type: :request do
     @cheque = ReceivableType.create!(name: "Cheque Pré-datado", code: "cheque", base_spread: 0.0250)
   end
 
+  include ActiveJob::TestHelper
+
   describe "GET /api/v1/currencies" do
     it "retorna moedas cadastradas" do
       get api_v1_currencies_path
@@ -98,20 +100,23 @@ RSpec.describe "API V1 Endpoints", type: :request do
         { identifier: "DUP-002", face_value: 1000.00, due_date: (Date.today + 30.days).to_s, receivable_type_code: "duplicata", currency_code: "BRL" }
       ]
 
-      expect {
-        post api_v1_operations_path, params: {
-          operation: {
-            assignee: "Empresa ABC",
-            payment_currency_code: "BRL",
-            base_rate: 0.0,
-            receivables: receivables_payload
+      perform_enqueued_jobs do
+        expect {
+          post api_v1_operations_path, params: {
+            operation: {
+              assignee: "Empresa ABC",
+              payment_currency_code: "BRL",
+              base_rate: 0.0,
+              receivables: receivables_payload
+            }
           }
-        }
-      }.to change { Operation.count }.by(1).and change { Receivable.count }.by(1)
+        }.to change { Operation.count }.by(1).and change { Receivable.count }.by(1)
+      end
 
       expect(response).to have_http_status(:created)
 
       operation = Operation.last
+      expect(operation.status).to eq("liquidated")
       expect(operation.assignee).to eq("Empresa ABC")
       expect(operation.total_face_value.to_f).to eq(1000.00)
       expect(operation.total_net_value.to_f).to eq(985.2217)
@@ -122,24 +127,28 @@ RSpec.describe "API V1 Endpoints", type: :request do
       expect(receivable.net_value.to_f).to eq(985.2217)
     end
 
-    it "falha na criação e mantém atomicidade do banco se houver dados inválidos" do
+    it "cria operação e depois falha na liquidação se houver dados inválidos" do
       receivables_payload = [
         { identifier: "DUP-GOOD", face_value: 1000.00, due_date: (Date.today + 30.days).to_s, receivable_type_code: "duplicata", currency_code: "BRL" },
         { identifier: "DUP-BAD", face_value: -500.00, due_date: (Date.today + 30.days).to_s, receivable_type_code: "duplicata", currency_code: "BRL" } # face value negativo inválido
       ]
 
-      expect {
-        post api_v1_operations_path, params: {
-          operation: {
-            assignee: "Empresa Falha",
-            payment_currency_code: "BRL",
-            base_rate: 0.0,
-            receivables: receivables_payload
+      perform_enqueued_jobs do
+        expect {
+          post api_v1_operations_path, params: {
+            operation: {
+              assignee: "Empresa Falha",
+              payment_currency_code: "BRL",
+              base_rate: 0.0,
+              receivables: receivables_payload
+            }
           }
-        }
-      }.not_to change { [ Operation.count, Receivable.count ] }
+        }.to change { Operation.count }.by(1)
+      end
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      operation = Operation.last
+      expect(operation.status).to eq("failed")
+      expect(Receivable.count).to eq(0)
     end
   end
 end

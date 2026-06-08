@@ -7,4 +7,5 @@ class Operation < ApplicationRecord
   validates :assignee, presence: true
   validates :total_face_value, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :total_net_value, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :status, presence: true, inclusion: { in: %w[pending processing liquidated failed] }
 end

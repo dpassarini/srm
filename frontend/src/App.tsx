@@ -184,7 +184,7 @@ export default function App() {
         }))
       };
       await createOperation(payload);
-      setSuccessMsg("Operação de Cessão liquidada e gravada com sucesso!");
+      setSuccessMsg("Operação registrada! A liquidação está sendo processada em segundo plano.");
       
       // Reset Form
       setAssignee("");
@@ -710,6 +710,7 @@ export default function App() {
                     <tr className="border-b border-slate-800 bg-slate-900/40 text-xs font-bold text-slate-400 uppercase tracking-wider">
                       <th className="py-4 px-6">Cedente</th>
                       <th className="py-4 px-6">Data Liquidação</th>
+                      <th className="py-4 px-6 text-center">Status</th>
                       <th className="py-4 px-6 text-right">Moeda Pago</th>
                       <th className="py-4 px-6 text-right">Valor Face Total</th>
                       <th className="py-4 px-6 text-right">Valor Líquido Total</th>
@@ -729,6 +730,28 @@ export default function App() {
                             <td className="py-4 px-6 text-slate-200 font-bold">{op.assignee}</td>
                             <td className="py-4 px-6 text-slate-400">
                               {new Date(op.created_at).toLocaleString("pt-BR")}
+                            </td>
+                            <td className="py-4 px-6 text-center">
+                              {op.status === "liquidated" && (
+                                <span className="px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold rounded-lg uppercase tracking-wider">
+                                  Liquidada
+                                </span>
+                              )}
+                              {op.status === "processing" && (
+                                <span className="px-2 py-0.5 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[10px] font-bold rounded-lg uppercase tracking-wider animate-pulse">
+                                  Processando
+                                </span>
+                              )}
+                              {op.status === "pending" && (
+                                <span className="px-2 py-0.5 bg-blue-500/10 border border-blue-500/30 text-blue-400 text-[10px] font-bold rounded-lg uppercase tracking-wider">
+                                  Pendente
+                                </span>
+                              )}
+                              {op.status === "failed" && (
+                                <span className="px-2 py-0.5 bg-red-500/10 border border-red-500/30 text-red-400 text-[10px] font-bold rounded-lg uppercase tracking-wider">
+                                  Falhou
+                                </span>
+                              )}
                             </td>
                             <td className="py-4 px-6 text-right font-mono font-bold text-blue-400">
                               {op.payment_currency.code}
