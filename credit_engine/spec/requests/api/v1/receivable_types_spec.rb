@@ -2,12 +2,6 @@ require "rails_helper"
 
 RSpec.describe "Receivable Types API", type: :request do
   before do
-    Receivable.delete_all
-    Operation.delete_all
-    ExchangeRate.delete_all
-    ReceivableType.delete_all
-    Currency.delete_all
-
     @duplicata = ReceivableType.create!(name: "Duplicata Mercantil", code: "duplicata", base_spread: 0.0150)
     @cheque = ReceivableType.create!(name: "Cheque Pré-datado", code: "cheque", base_spread: 0.0250)
   end

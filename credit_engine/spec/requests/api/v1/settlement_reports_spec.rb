@@ -4,13 +4,6 @@ RSpec.describe "Settlement Reports API", type: :request do
   include ActiveJob::TestHelper
 
   before do
-    Receivable.delete_all
-    Operation.delete_all
-    ExchangeRate.delete_all
-    ReceivableType.delete_all
-    Currency.delete_all
-    SettlementReport.delete_all
-
     @brl = Currency.create!(code: "BRL", name: "Real", symbol: "R$")
     @duplicata = ReceivableType.create!(name: "Duplicata Mercantil", code: "duplicata", base_spread: 0.0150)
 
@@ -19,7 +12,7 @@ RSpec.describe "Settlement Reports API", type: :request do
       identifier: "DUP-123",
       face_value: 1000.00,
       net_value: 985.2217,
-      due_date: Date.today + 30.days,
+      due_date: Date.current + 30.days,
       days_to_maturity: 30,
       spread_applied: 0.015,
       base_rate_applied: 0.0,

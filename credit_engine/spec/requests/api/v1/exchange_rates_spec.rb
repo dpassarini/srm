@@ -2,17 +2,11 @@ require "rails_helper"
 
 RSpec.describe "Exchange Rates API", type: :request do
   before do
-    Receivable.delete_all
-    Operation.delete_all
-    ExchangeRate.delete_all
-    ReceivableType.delete_all
-    Currency.delete_all
-
     @brl = Currency.create!(code: "BRL", name: "Real", symbol: "R$")
     @usd = Currency.create!(code: "USD", name: "Dollar", symbol: "$")
 
-    ExchangeRate.create!(from_currency: @usd, to_currency: @brl, rate: 5.0, reference_date: Date.today)
-    ExchangeRate.create!(from_currency: @brl, to_currency: @usd, rate: 0.2, reference_date: Date.today)
+    ExchangeRate.create!(from_currency: @usd, to_currency: @brl, rate: 5.0, reference_date: Date.current)
+    ExchangeRate.create!(from_currency: @brl, to_currency: @usd, rate: 0.2, reference_date: Date.current)
   end
 
   describe "POST /api/v1/exchange_rates" do
@@ -22,7 +16,7 @@ RSpec.describe "Exchange Rates API", type: :request do
           from_currency_code: "USD",
           to_currency_code: "BRL",
           rate: 5.5,
-          reference_date: (Date.today + 1.day).to_s
+          reference_date: (Date.current + 1.day).to_s
         }
       }
 
@@ -34,7 +28,7 @@ RSpec.describe "Exchange Rates API", type: :request do
       reverse_rate = ExchangeRate.find_by(
         from_currency: @brl,
         to_currency: @usd,
-        reference_date: Date.today + 1.day
+        reference_date: Date.current + 1.day
       )
       expect(reverse_rate).not_to be_nil
       expect(reverse_rate.rate.to_f).to eq((1.0 / 5.5).round(8))
