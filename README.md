@@ -73,7 +73,11 @@ docker compose exec -e RAILS_ENV=test web bundle exec rspec
 
 *Nota: É necessário passar explicitamente a variável `-e RAILS_ENV=test` para que o RSpec execute usando as configurações e base de testes isolada de forma limpa.*
 
+### 🌐 Integração Contínua (CI)
+O projeto conta com um workflow do GitHub Actions configurado em [ci.yml](file:///home/dpassarini/Prototipos/srm/.github/workflows/ci.yml) que executa automaticamente a suíte de testes do RSpec a cada push ou pull request para as branches `main`, `master` e `development`. O workflow configura o Ruby 4.0.5 e inicializa serviços do Postgres e Redis diretamente no runner do GitHub.
+
 ---
+
 
 ## 📁 Estrutura de Diretórios e Documentação
 
