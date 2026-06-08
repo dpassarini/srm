@@ -3,7 +3,7 @@ module Api
     class ReceivableTypesController < BaseController
       def index
         types = ReceivableType.all.order(:name)
-        render json: types, only: [:id, :name, :code, :base_spread]
+        render json: types, only: [ :id, :name, :code, :base_spread ]
       end
     end
   end

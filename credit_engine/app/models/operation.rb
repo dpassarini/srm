@@ -1,5 +1,5 @@
 class Operation < ApplicationRecord
-  belongs_to :payment_currency, class_name: 'Currency'
+  belongs_to :payment_currency, class_name: "Currency"
   has_many :receivables, dependent: :destroy
 
   accepts_nested_attributes_for :receivables

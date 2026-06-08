@@ -1,4 +1,4 @@
-require 'bigdecimal'
+require "bigdecimal"
 
 module PricingEngine
   class Calculator
@@ -23,13 +23,13 @@ module PricingEngine
 
       # Resolve pricing strategy
       strategy_class = case receivable_type_code.to_s.downcase
-                       when 'duplicata'
+      when "duplicata"
                          PricingEngine::Strategies::Duplicata
-                       when 'cheque'
+      when "cheque"
                          PricingEngine::Strategies::Cheque
-                       else
+      else
                          PricingEngine::Strategies::Base
-                       end
+      end
 
       strategy = strategy_class.new(spread)
       spread_applied = strategy.spread_applied

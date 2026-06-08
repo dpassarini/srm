@@ -11,10 +11,10 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :currencies, only: [:index]
-      resources :receivable_types, only: [:index]
-      resources :exchange_rates, only: [:index, :create]
-      resources :operations, only: [:index, :create] do
+      resources :currencies, only: [ :index ]
+      resources :receivable_types, only: [ :index ]
+      resources :exchange_rates, only: [ :index, :create ]
+      resources :operations, only: [ :index, :create ] do
         collection do
           post :simulate
         end

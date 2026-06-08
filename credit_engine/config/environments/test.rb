@@ -50,4 +50,9 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # Allow any host during testing (e.g. www.example.com used by RSpec)
+  config.hosts.clear
+  config.hosts << "www.example.com"
+  config.hosts << /.*/
 end

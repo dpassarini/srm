@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", "Inter", system-ui, sans-serif;
+  --color-brand-dark: #090a0f;
+  --color-brand-card: rgba(17, 18, 27, 0.65);
+  --color-brand-border: rgba(255, 255, 255, 0.08);
+  --color-brand-glow: rgba(59, 130, 246, 0.15);
+}
+
+@layer base {
+  body {
+    @apply bg-brand-dark text-slate-100 font-sans antialiased min-h-screen selection:bg-blue-500/30 selection:text-blue-200 overflow-x-hidden;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(30, 58, 138, 0.12) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(88, 28, 135, 0.08) 0px, transparent 50%);
+  }
+
+  /* Custom premium scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-brand-dark;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-700/50 rounded-full hover:bg-slate-600;
+  }
+}
+
+/* Custom premium backdrop-blur class (Glassmorphism) */
+.glass-panel {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: var(--color-brand-card);
+  border: 1px solid var(--color-brand-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-panel-glow {
+  position: relative;
+}
+
+.glass-panel-glow::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(to bottom right, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.05), transparent 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}

@@ -7,10 +7,10 @@ module Api
                             .limit(50)
 
         render json: rates.as_json(
-          only: [:id, :rate, :reference_date],
+          only: [ :id, :rate, :reference_date ],
           include: {
-            from_currency: { only: [:code, :symbol] },
-            to_currency: { only: [:code, :symbol] }
+            from_currency: { only: [ :code, :symbol ] },
+            to_currency: { only: [ :code, :symbol ] }
           }
         )
       end
@@ -47,10 +47,10 @@ module Api
         end
 
         render json: @rate_direct.as_json(
-          only: [:id, :rate, :reference_date],
+          only: [ :id, :rate, :reference_date ],
           include: {
-            from_currency: { only: [:code] },
-            to_currency: { only: [:code] }
+            from_currency: { only: [ :code ] },
+            to_currency: { only: [ :code ] }
           }
         ), status: :created
       end

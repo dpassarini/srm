@@ -3018,3 +3018,450 @@ Completed 200 OK in 4ms (Views: 0.1ms | ActiveRecord: 0.6ms (11 queries, 6 cache
   [1m[36mOperation Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "operations"[0m
   [1m[36mReceivable Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "receivables"[0m
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1[0m  [[nil, "schema_sha1"]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mReceivable Delete All (0.3ms)[0m  [1m[31mDELETE FROM "receivables"[0m
+  [1m[36mOperation Delete All (0.2ms)[0m  [1m[31mDELETE FROM "operations"[0m
+  [1m[36mExchangeRate Delete All (0.2ms)[0m  [1m[31mDELETE FROM "exchange_rates"[0m
+  [1m[36mReceivableType Delete All (0.2ms)[0m  [1m[31mDELETE FROM "receivable_types"[0m
+  [1m[36mCurrency Delete All (0.2ms)[0m  [1m[31mDELETE FROM "currencies"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.3ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "BRL"], ["created_at", "2026-06-08 13:25:40.719516"], ["name", "Real"], ["symbol", "R$"], ["updated_at", "2026-06-08 13:25:40.719516"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.2ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "USD"], ["created_at", "2026-06-08 13:25:40.722007"], ["name", "Dollar"], ["symbol", "$"], ["updated_at", "2026-06-08 13:25:40.722007"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 2], ["to_currency_id", 1], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.6ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.728316"], ["from_currency_id", 2], ["rate", "5.0"], ["reference_date", "2026-06-08"], ["to_currency_id", 1], ["updated_at", "2026-06-08 13:25:40.728316"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 1], ["to_currency_id", 2], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.2ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.730427"], ["from_currency_id", 1], ["rate", "0.2"], ["reference_date", "2026-06-08"], ["to_currency_id", 2], ["updated_at", "2026-06-08 13:25:40.730427"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.3ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.015"], ["code", "duplicata"], ["created_at", "2026-06-08 13:25:40.734845"], ["name", "Duplicata Mercantil"], ["updated_at", "2026-06-08 13:25:40.734845"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "cheque"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.025"], ["code", "cheque"], ["created_at", "2026-06-08 13:25:40.736235"], ["name", "Cheque Pré-datado"], ["updated_at", "2026-06-08 13:25:40.736235"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/api/v1/currencies" for 127.0.0.1 at 2026-06-08 13:25:40 +0000
+Processing by Api::V1::CurrenciesController#index as HTML
+  [1m[36mCurrency Load (0.4ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" ORDER BY "currencies"."code" ASC[0m
+Completed 200 OK in 1ms (Views: 0.6ms | ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mReceivable Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivables"[0m
+  [1m[36mOperation Delete All (0.1ms)[0m  [1m[31mDELETE FROM "operations"[0m
+  [1m[36mExchangeRate Delete All (0.1ms)[0m  [1m[31mDELETE FROM "exchange_rates"[0m
+  [1m[36mReceivableType Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivable_types"[0m
+  [1m[36mCurrency Delete All (0.1ms)[0m  [1m[31mDELETE FROM "currencies"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.2ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "BRL"], ["created_at", "2026-06-08 13:25:40.769222"], ["name", "Real"], ["symbol", "R$"], ["updated_at", "2026-06-08 13:25:40.769222"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.1ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "USD"], ["created_at", "2026-06-08 13:25:40.770490"], ["name", "Dollar"], ["symbol", "$"], ["updated_at", "2026-06-08 13:25:40.770490"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 4], ["to_currency_id", 3], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.2ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.771809"], ["from_currency_id", 4], ["rate", "5.0"], ["reference_date", "2026-06-08"], ["to_currency_id", 3], ["updated_at", "2026-06-08 13:25:40.771809"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 3], ["to_currency_id", 4], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.2ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.773003"], ["from_currency_id", 3], ["rate", "0.2"], ["reference_date", "2026-06-08"], ["to_currency_id", 4], ["updated_at", "2026-06-08 13:25:40.773003"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.015"], ["code", "duplicata"], ["created_at", "2026-06-08 13:25:40.774088"], ["name", "Duplicata Mercantil"], ["updated_at", "2026-06-08 13:25:40.774088"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "cheque"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.025"], ["code", "cheque"], ["created_at", "2026-06-08 13:25:40.775084"], ["name", "Cheque Pré-datado"], ["updated_at", "2026-06-08 13:25:40.775084"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/api/v1/receivable_types" for 127.0.0.1 at 2026-06-08 13:25:40 +0000
+Processing by Api::V1::ReceivableTypesController#index as HTML
+  [1m[36mReceivableType Load (0.2ms)[0m  [1m[34mSELECT "receivable_types".* FROM "receivable_types" ORDER BY "receivable_types"."name" ASC[0m
+Completed 200 OK in 1ms (Views: 0.5ms | ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mReceivable Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivables"[0m
+  [1m[36mOperation Delete All (0.1ms)[0m  [1m[31mDELETE FROM "operations"[0m
+  [1m[36mExchangeRate Delete All (0.1ms)[0m  [1m[31mDELETE FROM "exchange_rates"[0m
+  [1m[36mReceivableType Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivable_types"[0m
+  [1m[36mCurrency Delete All (0.1ms)[0m  [1m[31mDELETE FROM "currencies"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.1ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "BRL"], ["created_at", "2026-06-08 13:25:40.780952"], ["name", "Real"], ["symbol", "R$"], ["updated_at", "2026-06-08 13:25:40.780952"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.2ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "USD"], ["created_at", "2026-06-08 13:25:40.782104"], ["name", "Dollar"], ["symbol", "$"], ["updated_at", "2026-06-08 13:25:40.782104"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 6], ["to_currency_id", 5], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.2ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.783982"], ["from_currency_id", 6], ["rate", "5.0"], ["reference_date", "2026-06-08"], ["to_currency_id", 5], ["updated_at", "2026-06-08 13:25:40.783982"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 5], ["to_currency_id", 6], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.2ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.785648"], ["from_currency_id", 5], ["rate", "0.2"], ["reference_date", "2026-06-08"], ["to_currency_id", 6], ["updated_at", "2026-06-08 13:25:40.785648"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.015"], ["code", "duplicata"], ["created_at", "2026-06-08 13:25:40.786859"], ["name", "Duplicata Mercantil"], ["updated_at", "2026-06-08 13:25:40.786859"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "cheque"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.025"], ["code", "cheque"], ["created_at", "2026-06-08 13:25:40.787948"], ["name", "Cheque Pré-datado"], ["updated_at", "2026-06-08 13:25:40.787948"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/api/v1/exchange_rates" for 127.0.0.1 at 2026-06-08 13:25:40 +0000
+Processing by Api::V1::ExchangeRatesController#create as HTML
+  Parameters: {"exchange_rate" => {"from_currency_code" => "USD", "to_currency_code" => "BRL", "rate" => "5.5", "reference_date" => "2026-06-09"}}
+  [1m[36mCurrency Load (0.4ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mCurrency Load (0.1ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Load (0.3ms)[0m  [1m[34mSELECT "exchange_rates".* FROM "exchange_rates" WHERE "exchange_rates"."from_currency_id" = $1 AND "exchange_rates"."to_currency_id" = $2 AND "exchange_rates"."reference_date" = $3 LIMIT $4[0m  [["from_currency_id", 6], ["to_currency_id", 5], ["reference_date", "2026-06-09"], ["LIMIT", 1]]
+  [1m[36mExchangeRate Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-09"], ["from_currency_id", 6], ["to_currency_id", 5], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.2ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.797982"], ["from_currency_id", 6], ["rate", "5.5"], ["reference_date", "2026-06-09"], ["to_currency_id", 5], ["updated_at", "2026-06-08 13:25:40.797982"]]
+  [1m[36mExchangeRate Load (0.1ms)[0m  [1m[34mSELECT "exchange_rates".* FROM "exchange_rates" WHERE "exchange_rates"."from_currency_id" = $1 AND "exchange_rates"."to_currency_id" = $2 AND "exchange_rates"."reference_date" = $3 LIMIT $4[0m  [["from_currency_id", 5], ["to_currency_id", 6], ["reference_date", "2026-06-09"], ["LIMIT", 1]]
+  [1m[36mExchangeRate Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-09"], ["from_currency_id", 5], ["to_currency_id", 6], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.2ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.799711"], ["from_currency_id", 5], ["rate", "0.18181818"], ["reference_date", "2026-06-09"], ["to_currency_id", 6], ["updated_at", "2026-06-08 13:25:40.799711"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 201 Created in 6ms (Views: 0.1ms | ActiveRecord: 1.6ms (8 queries, 0 cached) | GC: 0.0ms)
+  [1m[36mExchangeRate Load (0.1ms)[0m  [1m[34mSELECT "exchange_rates".* FROM "exchange_rates" WHERE "exchange_rates"."from_currency_id" = $1 AND "exchange_rates"."to_currency_id" = $2 AND "exchange_rates"."reference_date" = $3 LIMIT $4[0m  [["from_currency_id", 5], ["to_currency_id", 6], ["reference_date", "2026-06-09"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mReceivable Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivables"[0m
+  [1m[36mOperation Delete All (0.1ms)[0m  [1m[31mDELETE FROM "operations"[0m
+  [1m[36mExchangeRate Delete All (0.1ms)[0m  [1m[31mDELETE FROM "exchange_rates"[0m
+  [1m[36mReceivableType Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivable_types"[0m
+  [1m[36mCurrency Delete All (0.1ms)[0m  [1m[31mDELETE FROM "currencies"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.1ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "BRL"], ["created_at", "2026-06-08 13:25:40.804507"], ["name", "Real"], ["symbol", "R$"], ["updated_at", "2026-06-08 13:25:40.804507"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.1ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "USD"], ["created_at", "2026-06-08 13:25:40.805584"], ["name", "Dollar"], ["symbol", "$"], ["updated_at", "2026-06-08 13:25:40.805584"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 8], ["to_currency_id", 7], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.1ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.806838"], ["from_currency_id", 8], ["rate", "5.0"], ["reference_date", "2026-06-08"], ["to_currency_id", 7], ["updated_at", "2026-06-08 13:25:40.806838"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 7], ["to_currency_id", 8], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.1ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.807977"], ["from_currency_id", 7], ["rate", "0.2"], ["reference_date", "2026-06-08"], ["to_currency_id", 8], ["updated_at", "2026-06-08 13:25:40.807977"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.015"], ["code", "duplicata"], ["created_at", "2026-06-08 13:25:40.809038"], ["name", "Duplicata Mercantil"], ["updated_at", "2026-06-08 13:25:40.809038"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "cheque"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.025"], ["code", "cheque"], ["created_at", "2026-06-08 13:25:40.810063"], ["name", "Cheque Pré-datado"], ["updated_at", "2026-06-08 13:25:40.810063"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mOperation Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "operations"[0m
+  [1m[36mReceivable Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "receivables"[0m
+Started POST "/api/v1/operations/simulate" for 127.0.0.1 at 2026-06-08 13:25:40 +0000
+Processing by Api::V1::OperationsController#simulate as HTML
+  Parameters: {"operation" => {"assignee" => "Empresa XYZ", "payment_currency_code" => "USD", "base_rate" => "0.0", "receivables" => [{"identifier" => "DUP-001", "face_value" => "1000.0", "due_date" => "2026-07-08", "receivable_type_code" => "duplicata", "currency_code" => "BRL"}, {"identifier" => "CHQ-001", "face_value" => "2000.0", "due_date" => "2026-08-07", "receivable_type_code" => "cheque", "currency_code" => "BRL"}]}}
+  [1m[36mCurrency Load (0.1ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mReceivableType Load (0.2ms)[0m  [1m[34mSELECT "receivable_types".* FROM "receivable_types" WHERE "receivable_types"."code" = $1 LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mCurrency Load (0.1ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mCACHE Currency Load (0.0ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mExchangeRate Load (0.4ms)[0m  [1m[34mSELECT "exchange_rates".* FROM "exchange_rates" WHERE "exchange_rates"."from_currency_id" = $1 AND "exchange_rates"."to_currency_id" = $2 AND (reference_date <= $3) ORDER BY "exchange_rates"."reference_date" DESC LIMIT $4[0m  [["from_currency_id", 7], ["to_currency_id", 8], [nil, "2026-06-08"], ["LIMIT", 1]]
+  [1m[36mCACHE Currency Load (0.0ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mReceivableType Load (0.1ms)[0m  [1m[34mSELECT "receivable_types".* FROM "receivable_types" WHERE "receivable_types"."code" = $1 LIMIT $2[0m  [["code", "cheque"], ["LIMIT", 1]]
+  [1m[36mCACHE Currency Load (0.0ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mCACHE Currency Load (0.0ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mCACHE ExchangeRate Load (0.0ms)[0m  [1m[34mSELECT "exchange_rates".* FROM "exchange_rates" WHERE "exchange_rates"."from_currency_id" = $1 AND "exchange_rates"."to_currency_id" = $2 AND (reference_date <= $3) ORDER BY "exchange_rates"."reference_date" DESC LIMIT $4[0m  [["from_currency_id", 7], ["to_currency_id", 8], [nil, "2026-06-08"], ["LIMIT", 1]]
+  [1m[36mCACHE Currency Load (0.0ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+Completed 200 OK in 5ms (Views: 0.1ms | ActiveRecord: 0.9ms (11 queries, 6 cached) | GC: 0.0ms)
+  [1m[36mOperation Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "operations"[0m
+  [1m[36mReceivable Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "receivables"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mReceivable Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivables"[0m
+  [1m[36mOperation Delete All (0.1ms)[0m  [1m[31mDELETE FROM "operations"[0m
+  [1m[36mExchangeRate Delete All (0.1ms)[0m  [1m[31mDELETE FROM "exchange_rates"[0m
+  [1m[36mReceivableType Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivable_types"[0m
+  [1m[36mCurrency Delete All (0.1ms)[0m  [1m[31mDELETE FROM "currencies"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.1ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "BRL"], ["created_at", "2026-06-08 13:25:40.822389"], ["name", "Real"], ["symbol", "R$"], ["updated_at", "2026-06-08 13:25:40.822389"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.1ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "USD"], ["created_at", "2026-06-08 13:25:40.823546"], ["name", "Dollar"], ["symbol", "$"], ["updated_at", "2026-06-08 13:25:40.823546"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 10], ["to_currency_id", 9], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.2ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.824828"], ["from_currency_id", 10], ["rate", "5.0"], ["reference_date", "2026-06-08"], ["to_currency_id", 9], ["updated_at", "2026-06-08 13:25:40.824828"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 9], ["to_currency_id", 10], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.1ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.825989"], ["from_currency_id", 9], ["rate", "0.2"], ["reference_date", "2026-06-08"], ["to_currency_id", 10], ["updated_at", "2026-06-08 13:25:40.825989"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.015"], ["code", "duplicata"], ["created_at", "2026-06-08 13:25:40.827034"], ["name", "Duplicata Mercantil"], ["updated_at", "2026-06-08 13:25:40.827034"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "cheque"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.025"], ["code", "cheque"], ["created_at", "2026-06-08 13:25:40.828070"], ["name", "Cheque Pré-datado"], ["updated_at", "2026-06-08 13:25:40.828070"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mReceivable Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "receivables"[0m
+  [1m[36mOperation Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "operations"[0m
+Started POST "/api/v1/operations" for 127.0.0.1 at 2026-06-08 13:25:40 +0000
+Processing by Api::V1::OperationsController#create as HTML
+  Parameters: {"operation" => {"assignee" => "Empresa ABC", "payment_currency_code" => "BRL", "base_rate" => "0.0", "receivables" => [{"identifier" => "DUP-002", "face_value" => "1000.0", "due_date" => "2026-07-08", "receivable_type_code" => "duplicata", "currency_code" => "BRL"}]}}
+  [1m[36mCurrency Load (0.1ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mReceivableType Load (0.1ms)[0m  [1m[34mSELECT "receivable_types".* FROM "receivable_types" WHERE "receivable_types"."code" = $1 LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mCACHE Currency Load (0.0ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Load (0.5ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mReceivableType Load (0.2ms)[0m  [1m[34mSELECT "receivable_types".* FROM "receivable_types" WHERE "receivable_types"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mCACHE Currency Load (0.0ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mOperation Create (0.5ms)[0m  [1m[32mINSERT INTO "operations" ("assignee", "created_at", "payment_currency_id", "total_face_value", "total_net_value", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["assignee", "Empresa ABC"], ["created_at", "2026-06-08 13:25:40.848419"], ["payment_currency_id", 9], ["total_face_value", "1000.0"], ["total_net_value", "985.2217"], ["updated_at", "2026-06-08 13:25:40.848419"]]
+  [1m[36mReceivable Create (0.6ms)[0m  [1m[32mINSERT INTO "receivables" ("base_rate_applied", "created_at", "currency_id", "days_to_maturity", "due_date", "exchange_rate_applied", "face_value", "identifier", "net_value", "operation_id", "receivable_type_id", "spread_applied", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING "id"[0m  [["base_rate_applied", "0.0"], ["created_at", "2026-06-08 13:25:40.849511"], ["currency_id", 9], ["days_to_maturity", 30], ["due_date", "2026-07-08"], ["exchange_rate_applied", nil], ["face_value", "1000.0"], ["identifier", "DUP-002"], ["net_value", "985.2217"], ["operation_id", 1], ["receivable_type_id", 9], ["spread_applied", "0.015"], ["updated_at", "2026-06-08 13:25:40.849511"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mReceivable Load (0.2ms)[0m  [1m[34mSELECT "receivables".* FROM "receivables" WHERE "receivables"."operation_id" = $1[0m  [["operation_id", 1]]
+Completed 201 Created in 22ms (Views: 0.1ms | ActiveRecord: 3.7ms (9 queries, 2 cached) | GC: 0.0ms)
+  [1m[36mOperation Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "operations"[0m
+  [1m[36mReceivable Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "receivables"[0m
+  [1m[36mOperation Load (0.3ms)[0m  [1m[34mSELECT "operations".* FROM "operations" ORDER BY "operations"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mReceivable Load (0.2ms)[0m  [1m[34mSELECT "receivables".* FROM "receivables" WHERE "receivables"."operation_id" = $1 ORDER BY "receivables"."id" ASC LIMIT $2[0m  [["operation_id", 1], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mReceivable Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivables"[0m
+  [1m[36mOperation Delete All (0.1ms)[0m  [1m[31mDELETE FROM "operations"[0m
+  [1m[36mExchangeRate Delete All (0.1ms)[0m  [1m[31mDELETE FROM "exchange_rates"[0m
+  [1m[36mReceivableType Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivable_types"[0m
+  [1m[36mCurrency Delete All (0.1ms)[0m  [1m[31mDELETE FROM "currencies"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.1ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "BRL"], ["created_at", "2026-06-08 13:25:40.857192"], ["name", "Real"], ["symbol", "R$"], ["updated_at", "2026-06-08 13:25:40.857192"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.1ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "USD"], ["created_at", "2026-06-08 13:25:40.858300"], ["name", "Dollar"], ["symbol", "$"], ["updated_at", "2026-06-08 13:25:40.858300"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 12], ["to_currency_id", 11], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.2ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.859684"], ["from_currency_id", 12], ["rate", "5.0"], ["reference_date", "2026-06-08"], ["to_currency_id", 11], ["updated_at", "2026-06-08 13:25:40.859684"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 11], ["to_currency_id", 12], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.1ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.861298"], ["from_currency_id", 11], ["rate", "0.2"], ["reference_date", "2026-06-08"], ["to_currency_id", 12], ["updated_at", "2026-06-08 13:25:40.861298"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.015"], ["code", "duplicata"], ["created_at", "2026-06-08 13:25:40.862596"], ["name", "Duplicata Mercantil"], ["updated_at", "2026-06-08 13:25:40.862596"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "cheque"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.025"], ["code", "cheque"], ["created_at", "2026-06-08 13:25:40.863651"], ["name", "Cheque Pré-datado"], ["updated_at", "2026-06-08 13:25:40.863651"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mOperation Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "operations"[0m
+  [1m[36mReceivable Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "receivables"[0m
+Started POST "/api/v1/operations" for 127.0.0.1 at 2026-06-08 13:25:40 +0000
+Processing by Api::V1::OperationsController#create as HTML
+  Parameters: {"operation" => {"assignee" => "Empresa Falha", "payment_currency_code" => "BRL", "base_rate" => "0.0", "receivables" => [{"identifier" => "DUP-GOOD", "face_value" => "1000.0", "due_date" => "2026-07-08", "receivable_type_code" => "duplicata", "currency_code" => "BRL"}, {"identifier" => "DUP-BAD", "face_value" => "-500.0", "due_date" => "2026-07-08", "receivable_type_code" => "duplicata", "currency_code" => "BRL"}]}}
+  [1m[36mCurrency Load (0.2ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mReceivableType Load (0.1ms)[0m  [1m[34mSELECT "receivable_types".* FROM "receivable_types" WHERE "receivable_types"."code" = $1 LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mCACHE Currency Load (0.0ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mCACHE ReceivableType Load (0.0ms)[0m  [1m[34mSELECT "receivable_types".* FROM "receivable_types" WHERE "receivable_types"."code" = $1 LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mCACHE Currency Load (0.0ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Load (0.3ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mReceivableType Load (0.1ms)[0m  [1m[34mSELECT "receivable_types".* FROM "receivable_types" WHERE "receivable_types"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mCACHE Currency Load (0.0ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mCACHE ReceivableType Load (0.0ms)[0m  [1m[34mSELECT "receivable_types".* FROM "receivable_types" WHERE "receivable_types"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mCACHE Currency Load (0.0ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+rescue_from handled ActiveRecord::RecordInvalid (Validation failed: Receivables face value must be greater than 0, Receivables net value must be greater than 0) - /usr/local/bundle/ruby/4.0.0/gems/activerecord-8.1.3/lib/active_record/validations.rb:87:in 'ActiveRecord::Validations#raise_validation_error'
+Completed 422 Unprocessable Content in 33ms (Views: 0.1ms | ActiveRecord: 0.9ms (10 queries, 6 cached) | GC: 25.8ms)
+  [1m[36mOperation Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "operations"[0m
+  [1m[36mReceivable Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "receivables"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mReceivable Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivables"[0m
+  [1m[36mOperation Delete All (0.1ms)[0m  [1m[31mDELETE FROM "operations"[0m
+  [1m[36mExchangeRate Delete All (0.1ms)[0m  [1m[31mDELETE FROM "exchange_rates"[0m
+  [1m[36mReceivableType Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivable_types"[0m
+  [1m[36mCurrency Delete All (0.1ms)[0m  [1m[31mDELETE FROM "currencies"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.2ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "BRL"], ["created_at", "2026-06-08 13:25:40.904291"], ["name", "Real"], ["symbol", "R$"], ["updated_at", "2026-06-08 13:25:40.904291"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.1ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "USD"], ["created_at", "2026-06-08 13:25:40.905565"], ["name", "Dollar"], ["symbol", "$"], ["updated_at", "2026-06-08 13:25:40.905565"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 14], ["to_currency_id", 13], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.1ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.906919"], ["from_currency_id", 14], ["rate", "5.0"], ["reference_date", "2026-06-08"], ["to_currency_id", 13], ["updated_at", "2026-06-08 13:25:40.906919"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 13], ["to_currency_id", 14], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.1ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.908129"], ["from_currency_id", 13], ["rate", "0.2"], ["reference_date", "2026-06-08"], ["to_currency_id", 14], ["updated_at", "2026-06-08 13:25:40.908129"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.015"], ["code", "duplicata"], ["created_at", "2026-06-08 13:25:40.909210"], ["name", "Duplicata Mercantil"], ["updated_at", "2026-06-08 13:25:40.909210"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "cheque"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.025"], ["code", "cheque"], ["created_at", "2026-06-08 13:25:40.910776"], ["name", "Cheque Pré-datado"], ["updated_at", "2026-06-08 13:25:40.910776"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Load (0.1ms)[0m  [1m[34mSELECT "receivable_types".* FROM "receivable_types" WHERE "receivable_types"."code" = $1 LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mCurrency Load (0.1ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mReceivable Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivables"[0m
+  [1m[36mOperation Delete All (0.1ms)[0m  [1m[31mDELETE FROM "operations"[0m
+  [1m[36mExchangeRate Delete All (0.1ms)[0m  [1m[31mDELETE FROM "exchange_rates"[0m
+  [1m[36mReceivableType Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivable_types"[0m
+  [1m[36mCurrency Delete All (0.1ms)[0m  [1m[31mDELETE FROM "currencies"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.1ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "BRL"], ["created_at", "2026-06-08 13:25:40.914284"], ["name", "Real"], ["symbol", "R$"], ["updated_at", "2026-06-08 13:25:40.914284"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.1ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "USD"], ["created_at", "2026-06-08 13:25:40.915310"], ["name", "Dollar"], ["symbol", "$"], ["updated_at", "2026-06-08 13:25:40.915310"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 16], ["to_currency_id", 15], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.1ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.916580"], ["from_currency_id", 16], ["rate", "5.0"], ["reference_date", "2026-06-08"], ["to_currency_id", 15], ["updated_at", "2026-06-08 13:25:40.916580"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 15], ["to_currency_id", 16], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.1ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.918371"], ["from_currency_id", 15], ["rate", "0.2"], ["reference_date", "2026-06-08"], ["to_currency_id", 16], ["updated_at", "2026-06-08 13:25:40.918371"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.015"], ["code", "duplicata"], ["created_at", "2026-06-08 13:25:40.919475"], ["name", "Duplicata Mercantil"], ["updated_at", "2026-06-08 13:25:40.919475"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "cheque"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.025"], ["code", "cheque"], ["created_at", "2026-06-08 13:25:40.920494"], ["name", "Cheque Pré-datado"], ["updated_at", "2026-06-08 13:25:40.920494"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Load (0.1ms)[0m  [1m[34mSELECT "receivable_types".* FROM "receivable_types" WHERE "receivable_types"."code" = $1 LIMIT $2[0m  [["code", "cheque"], ["LIMIT", 1]]
+  [1m[36mCurrency Load (0.1ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mReceivable Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivables"[0m
+  [1m[36mOperation Delete All (0.1ms)[0m  [1m[31mDELETE FROM "operations"[0m
+  [1m[36mExchangeRate Delete All (0.1ms)[0m  [1m[31mDELETE FROM "exchange_rates"[0m
+  [1m[36mReceivableType Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivable_types"[0m
+  [1m[36mCurrency Delete All (0.1ms)[0m  [1m[31mDELETE FROM "currencies"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.1ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "BRL"], ["created_at", "2026-06-08 13:25:40.923859"], ["name", "Real"], ["symbol", "R$"], ["updated_at", "2026-06-08 13:25:40.923859"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.1ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "USD"], ["created_at", "2026-06-08 13:25:40.925289"], ["name", "Dollar"], ["symbol", "$"], ["updated_at", "2026-06-08 13:25:40.925289"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 18], ["to_currency_id", 17], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.2ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.926478"], ["from_currency_id", 18], ["rate", "5.0"], ["reference_date", "2026-06-08"], ["to_currency_id", 17], ["updated_at", "2026-06-08 13:25:40.926478"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 17], ["to_currency_id", 18], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.1ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.927630"], ["from_currency_id", 17], ["rate", "0.2"], ["reference_date", "2026-06-08"], ["to_currency_id", 18], ["updated_at", "2026-06-08 13:25:40.927630"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.015"], ["code", "duplicata"], ["created_at", "2026-06-08 13:25:40.928693"], ["name", "Duplicata Mercantil"], ["updated_at", "2026-06-08 13:25:40.928693"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "cheque"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.025"], ["code", "cheque"], ["created_at", "2026-06-08 13:25:40.929711"], ["name", "Cheque Pré-datado"], ["updated_at", "2026-06-08 13:25:40.929711"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Load (0.1ms)[0m  [1m[34mSELECT "receivable_types".* FROM "receivable_types" WHERE "receivable_types"."code" = $1 LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mCurrency Load (0.1ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mCurrency Load (0.1ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mExchangeRate Load (0.1ms)[0m  [1m[34mSELECT "exchange_rates".* FROM "exchange_rates" WHERE "exchange_rates"."from_currency_id" = $1 AND "exchange_rates"."to_currency_id" = $2 AND (reference_date <= $3) ORDER BY "exchange_rates"."reference_date" DESC LIMIT $4[0m  [["from_currency_id", 17], ["to_currency_id", 18], [nil, "2026-06-08"], ["LIMIT", 1]]
+  [1m[36mCurrency Load (0.1ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mReceivable Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivables"[0m
+  [1m[36mOperation Delete All (0.1ms)[0m  [1m[31mDELETE FROM "operations"[0m
+  [1m[36mExchangeRate Delete All (0.1ms)[0m  [1m[31mDELETE FROM "exchange_rates"[0m
+  [1m[36mReceivableType Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivable_types"[0m
+  [1m[36mCurrency Delete All (0.1ms)[0m  [1m[31mDELETE FROM "currencies"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.1ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "BRL"], ["created_at", "2026-06-08 13:25:40.934588"], ["name", "Real"], ["symbol", "R$"], ["updated_at", "2026-06-08 13:25:40.934588"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.1ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "USD"], ["created_at", "2026-06-08 13:25:40.935686"], ["name", "Dollar"], ["symbol", "$"], ["updated_at", "2026-06-08 13:25:40.935686"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 20], ["to_currency_id", 19], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.1ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.936987"], ["from_currency_id", 20], ["rate", "5.0"], ["reference_date", "2026-06-08"], ["to_currency_id", 19], ["updated_at", "2026-06-08 13:25:40.936987"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 19], ["to_currency_id", 20], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.1ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.938205"], ["from_currency_id", 19], ["rate", "0.2"], ["reference_date", "2026-06-08"], ["to_currency_id", 20], ["updated_at", "2026-06-08 13:25:40.938205"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.015"], ["code", "duplicata"], ["created_at", "2026-06-08 13:25:40.939302"], ["name", "Duplicata Mercantil"], ["updated_at", "2026-06-08 13:25:40.939302"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "cheque"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.025"], ["code", "cheque"], ["created_at", "2026-06-08 13:25:40.940549"], ["name", "Cheque Pré-datado"], ["updated_at", "2026-06-08 13:25:40.940549"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mReceivable Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivables"[0m
+  [1m[36mOperation Delete All (0.1ms)[0m  [1m[31mDELETE FROM "operations"[0m
+  [1m[36mExchangeRate Delete All (0.1ms)[0m  [1m[31mDELETE FROM "exchange_rates"[0m
+  [1m[36mReceivableType Delete All (0.1ms)[0m  [1m[31mDELETE FROM "receivable_types"[0m
+  [1m[36mCurrency Delete All (0.1ms)[0m  [1m[31mDELETE FROM "currencies"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.1ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "BRL"], ["created_at", "2026-06-08 13:25:40.944384"], ["name", "Real"], ["symbol", "R$"], ["updated_at", "2026-06-08 13:25:40.944384"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCurrency Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "currencies" WHERE LOWER("currencies"."code") = LOWER($1) LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mCurrency Create (0.1ms)[0m  [1m[32mINSERT INTO "currencies" ("code", "created_at", "name", "symbol", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["code", "USD"], ["created_at", "2026-06-08 13:25:40.945642"], ["name", "Dollar"], ["symbol", "$"], ["updated_at", "2026-06-08 13:25:40.945642"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 22], ["to_currency_id", 21], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.2ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.947273"], ["from_currency_id", 22], ["rate", "5.0"], ["reference_date", "2026-06-08"], ["to_currency_id", 21], ["updated_at", "2026-06-08 13:25:40.947273"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mExchangeRate Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "exchange_rates" WHERE "exchange_rates"."reference_date" = $1 AND "exchange_rates"."from_currency_id" = $2 AND "exchange_rates"."to_currency_id" = $3 LIMIT $4[0m  [["reference_date", "2026-06-08"], ["from_currency_id", 21], ["to_currency_id", 22], ["LIMIT", 1]]
+  [1m[36mExchangeRate Create (0.1ms)[0m  [1m[32mINSERT INTO "exchange_rates" ("created_at", "from_currency_id", "rate", "reference_date", "to_currency_id", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["created_at", "2026-06-08 13:25:40.948931"], ["from_currency_id", 21], ["rate", "0.2"], ["reference_date", "2026-06-08"], ["to_currency_id", 22], ["updated_at", "2026-06-08 13:25:40.948931"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.015"], ["code", "duplicata"], ["created_at", "2026-06-08 13:25:40.950140"], ["name", "Duplicata Mercantil"], ["updated_at", "2026-06-08 13:25:40.950140"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mReceivableType Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "receivable_types" WHERE LOWER("receivable_types"."code") = LOWER($1) LIMIT $2[0m  [["code", "cheque"], ["LIMIT", 1]]
+  [1m[36mReceivableType Create (0.1ms)[0m  [1m[32mINSERT INTO "receivable_types" ("base_spread", "code", "created_at", "name", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["base_spread", "0.025"], ["code", "cheque"], ["created_at", "2026-06-08 13:25:40.951309"], ["name", "Cheque Pré-datado"], ["updated_at", "2026-06-08 13:25:40.951309"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCurrency Load (0.1ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mReceivableType Load (0.1ms)[0m  [1m[34mSELECT "receivable_types".* FROM "receivable_types" WHERE "receivable_types"."code" = $1 LIMIT $2[0m  [["code", "duplicata"], ["LIMIT", 1]]
+  [1m[36mCurrency Load (0.1ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mCurrency Load (0.1ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mExchangeRate Load (0.1ms)[0m  [1m[34mSELECT "exchange_rates".* FROM "exchange_rates" WHERE "exchange_rates"."from_currency_id" = $1 AND "exchange_rates"."to_currency_id" = $2 AND (reference_date <= $3) ORDER BY "exchange_rates"."reference_date" DESC LIMIT $4[0m  [["from_currency_id", 21], ["to_currency_id", 22], [nil, "2026-06-08"], ["LIMIT", 1]]
+  [1m[36mCurrency Load (0.1ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mReceivableType Load (0.1ms)[0m  [1m[34mSELECT "receivable_types".* FROM "receivable_types" WHERE "receivable_types"."code" = $1 LIMIT $2[0m  [["code", "cheque"], ["LIMIT", 1]]
+  [1m[36mCurrency Load (0.1ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mCurrency Load (0.1ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "USD"], ["LIMIT", 1]]
+  [1m[36mExchangeRate Load (0.1ms)[0m  [1m[34mSELECT "exchange_rates".* FROM "exchange_rates" WHERE "exchange_rates"."from_currency_id" = $1 AND "exchange_rates"."to_currency_id" = $2 AND (reference_date <= $3) ORDER BY "exchange_rates"."reference_date" DESC LIMIT $4[0m  [["from_currency_id", 21], ["to_currency_id", 22], [nil, "2026-06-08"], ["LIMIT", 1]]
+  [1m[36mCurrency Load (0.1ms)[0m  [1m[34mSELECT "currencies".* FROM "currencies" WHERE "currencies"."code" = $1 LIMIT $2[0m  [["code", "BRL"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK[0m

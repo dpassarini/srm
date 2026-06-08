@@ -7,7 +7,7 @@ module Api
         per_page = (params[:per_page] || 10).to_i
         offset = (page - 1) * per_page
 
-        scope = Operation.includes(:payment_currency, receivables: [:currency, :receivable_type])
+        scope = Operation.includes(:payment_currency, receivables: [ :currency, :receivable_type ])
 
         # Filters
         if params[:assignee].present?
@@ -32,11 +32,11 @@ module Api
         render json: {
           operations: operations.as_json(
             include: {
-              payment_currency: { only: [:code, :symbol] },
+              payment_currency: { only: [ :code, :symbol ] },
               receivables: {
                 include: {
-                  currency: { only: [:code, :symbol] },
-                  receivable_type: { only: [:code, :name] }
+                  currency: { only: [ :code, :symbol ] },
+                  receivable_type: { only: [ :code, :name ] }
                 }
               }
             }
@@ -90,11 +90,11 @@ module Api
 
         render json: @operation.as_json(
           include: {
-            payment_currency: { only: [:code, :symbol] },
+            payment_currency: { only: [ :code, :symbol ] },
             receivables: {
               include: {
-                currency: { only: [:code, :symbol] },
-                receivable_type: { only: [:code, :name] }
+                currency: { only: [ :code, :symbol ] },
+                receivable_type: { only: [ :code, :name ] }
               }
             }
           }
@@ -109,7 +109,7 @@ module Api
           :assignee,
           :payment_currency_code,
           :base_rate,
-          receivables: [:identifier, :face_value, :due_date, :receivable_type_code, :currency_code]
+          receivables: [ :identifier, :face_value, :due_date, :receivable_type_code, :currency_code ]
         )
       end
     end

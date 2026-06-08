@@ -8,6 +8,6 @@ class CreateExchangeRates < ActiveRecord::Migration[8.1]
 
       t.timestamps
     end
-    add_index :exchange_rates, [:from_currency_id, :to_currency_id, :reference_date], unique: true, name: 'index_exchange_rates_on_currencies_and_date'
+    add_index :exchange_rates, [ :from_currency_id, :to_currency_id, :reference_date ], unique: true, name: 'index_exchange_rates_on_currencies_and_date'
   end
 end
