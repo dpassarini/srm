@@ -2,7 +2,7 @@
 
 Uma plataforma corporativa moderna e de alta fidelidade para **simulação e antecipação de lotes de recebíveis multimoeda** (BRL / USD). O sistema calcula o valor presente líquido (VPL) de recebíveis (como duplicatas e cheques) utilizando fórmulas de deságio composto ajustadas por prazo (dias corridos), taxas básicas e spreads operacionais cadastrados por tipo de recebível.
 
-O projeto dispõe de um backend robusto em **Ruby on Rails 8** rodando em modo API, um banco de dados **Postgres 18**, cache em **Redis**, e um frontend reativo de alta fidelidade desenvolvido em **React (Vite + TypeScript)** com estilo premium (Dark Mode & Glassmorphism) usando **Tailwind CSS v4**.
+O projeto dispõe de um backend robusto em **Ruby on Rails 8** rodando em modo API, um banco de dados **Postgres 18**, e um frontend reativo de alta fidelidade desenvolvido em **React (Vite + TypeScript)** com estilo premium (Dark Mode & Glassmorphism) usando **Tailwind CSS v4**.
 
 ---
 
@@ -27,7 +27,6 @@ docker compose up --build -d
 
 Este comando inicializará os seguintes serviços:
 - **db** (PostgreSQL 18.4 na porta `5432`)
-- **redis** (Redis 7 na porta `6379`)
 - **web** (API Ruby on Rails 8 na porta `3000`)
 - **frontend** (SPA React 19 na porta `5173`)
 
@@ -77,7 +76,7 @@ docker compose exec -e RAILS_ENV=test web bundle exec rspec
 O projeto conta com um workflow do GitHub Actions configurado em [ci.yml](file:///home/dpassarini/Prototipos/srm/.github/workflows/ci.yml) que executa automaticamente as seguintes verificações em paralelo a cada push ou pull request para as branches `main`, `master` e `development`:
 
 1. **RuboCop Lint**: Validação estática de estilo e padronização do código Ruby.
-2. **RSpec Tests**: Execução de toda a suíte de testes unitários e de integração, utilizando serviços ativos do PostgreSQL 18 e Redis 7 no runner do GitHub.
+2. **RSpec Tests**: Execução de toda a suíte de testes unitários e de integração, utilizando o serviço ativo do PostgreSQL 18 no runner do GitHub.
 
 ---
 
