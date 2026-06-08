@@ -49,7 +49,7 @@ export default function App() {
   const [assignee, setAssignee] = useState("");
   const [paymentCurrency, setPaymentCurrency] = useState("BRL");
   const [baseRate, setBaseRate] = useState(0.0);
-  const [receivables, setReceivables] = useState<ReceivableInput[]>([
+  const [receivables, setReceivables] = useState<ReceivableInput[]>(() => [
     { identifier: "TIT-01", face_value: 1000, due_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0], receivable_type_code: "duplicata", currency_code: "BRL" }
   ]);
   const [simulationResult, setSimulationResult] = useState<CalculatedOperation | null>(null);

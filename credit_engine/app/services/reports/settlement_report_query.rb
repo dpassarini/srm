@@ -9,7 +9,7 @@ module Reports
 
     def execute
       sql = <<~SQL
-        SELECT 
+        SELECT#{' '}
           o.id AS operation_id,
           o.assignee AS assignee,
           o.created_at AS operation_date,
@@ -32,7 +32,7 @@ module Reports
       SQL
 
       params = []
-      
+
       if @assignee.present?
         sql += " AND o.assignee ILIKE ?"
         params << "%#{@assignee}%"
@@ -55,7 +55,7 @@ module Reports
 
       sql += " ORDER BY o.created_at DESC, r.identifier ASC"
 
-      sanitized_sql = ActiveRecord::Base.sanitize_sql_array([sql, *params])
+      sanitized_sql = ActiveRecord::Base.sanitize_sql_array([ sql, *params ])
       ActiveRecord::Base.connection.select_all(sanitized_sql).to_a
     end
   end

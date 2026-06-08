@@ -1,8 +1,9 @@
 require "rails_helper"
 
-RSpec.describe "API V1 Endpoints", type: :request do
+RSpec.describe "Operations API", type: :request do
+  include ActiveJob::TestHelper
+
   before do
-    # Clean the database completely before each test
     Receivable.delete_all
     Operation.delete_all
     ExchangeRate.delete_all
@@ -17,54 +18,6 @@ RSpec.describe "API V1 Endpoints", type: :request do
 
     @duplicata = ReceivableType.create!(name: "Duplicata Mercantil", code: "duplicata", base_spread: 0.0150)
     @cheque = ReceivableType.create!(name: "Cheque Pré-datado", code: "cheque", base_spread: 0.0250)
-  end
-
-  include ActiveJob::TestHelper
-
-  describe "GET /api/v1/currencies" do
-    it "retorna moedas cadastradas" do
-      get api_v1_currencies_path
-      expect(response).to have_http_status(:success)
-      json = JSON.parse(response.body)
-      expect(json.length).to eq(2)
-      expect(json.map { |c| c["code"] }.sort).to eq([ "BRL", "USD" ])
-    end
-  end
-
-  describe "GET /api/v1/receivable_types" do
-    it "retorna tipos de recebiveis cadastrados" do
-      get api_v1_receivable_types_path
-      expect(response).to have_http_status(:success)
-      json = JSON.parse(response.body)
-      expect(json.length).to eq(2)
-      expect(json.map { |rt| rt["code"] }.sort).to eq([ "cheque", "duplicata" ])
-    end
-  end
-
-  describe "POST /api/v1/exchange_rates" do
-    it "cria nova taxa de câmbio e gera taxa reversa correspondente" do
-      post api_v1_exchange_rates_path, params: {
-        exchange_rate: {
-          from_currency_code: "USD",
-          to_currency_code: "BRL",
-          rate: 5.5,
-          reference_date: (Date.today + 1.day).to_s
-        }
-      }
-
-      expect(response).to have_http_status(:created)
-      json = JSON.parse(response.body)
-      expect(json["rate"].to_f).to eq(5.5)
-
-      # Verifica se a reversa foi gerada automaticamente para a mesma data
-      reverse_rate = ExchangeRate.find_by(
-        from_currency: @brl,
-        to_currency: @usd,
-        reference_date: Date.today + 1.day
-      )
-      expect(reverse_rate).not_to be_nil
-      expect(reverse_rate.rate.to_f).to eq((1.0 / 5.5).round(8))
-    end
   end
 
   describe "POST /api/v1/operations/simulate" do
