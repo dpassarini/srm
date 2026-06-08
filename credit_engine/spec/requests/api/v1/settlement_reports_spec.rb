@@ -19,7 +19,7 @@ RSpec.describe "Settlement Reports API", type: :request do
       identifier: "DUP-123",
       face_value: 1000.00,
       net_value: 985.2217,
-      due_date: Date.today + 30.days,
+      due_date: Date.current + 30.days,
       days_to_maturity: 30,
       spread_applied: 0.015,
       base_rate_applied: 0.0,

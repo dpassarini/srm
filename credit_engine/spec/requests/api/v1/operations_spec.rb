@@ -13,8 +13,8 @@ RSpec.describe "Operations API", type: :request do
     @brl = Currency.create!(code: "BRL", name: "Real", symbol: "R$")
     @usd = Currency.create!(code: "USD", name: "Dollar", symbol: "$")
 
-    ExchangeRate.create!(from_currency: @usd, to_currency: @brl, rate: 5.0, reference_date: Date.today)
-    ExchangeRate.create!(from_currency: @brl, to_currency: @usd, rate: 0.2, reference_date: Date.today)
+    ExchangeRate.create!(from_currency: @usd, to_currency: @brl, rate: 5.0, reference_date: Date.current)
+    ExchangeRate.create!(from_currency: @brl, to_currency: @usd, rate: 0.2, reference_date: Date.current)
 
     @duplicata = ReceivableType.create!(name: "Duplicata Mercantil", code: "duplicata", base_spread: 0.0150)
     @cheque = ReceivableType.create!(name: "Cheque Pré-datado", code: "cheque", base_spread: 0.0250)
@@ -23,8 +23,8 @@ RSpec.describe "Operations API", type: :request do
   describe "POST /api/v1/operations/simulate" do
     it "executa simulação de lote sem salvar no banco" do
       receivables_payload = [
-        { identifier: "DUP-001", face_value: 1000.00, due_date: (Date.today + 30.days).to_s, receivable_type_code: "duplicata", currency_code: "BRL" },
-        { identifier: "CHQ-001", face_value: 2000.00, due_date: (Date.today + 60.days).to_s, receivable_type_code: "cheque", currency_code: "BRL" }
+        { identifier: "DUP-001", face_value: 1000.00, due_date: (Date.current + 30.days).to_s, receivable_type_code: "duplicata", currency_code: "BRL" },
+        { identifier: "CHQ-001", face_value: 2000.00, due_date: (Date.current + 60.days).to_s, receivable_type_code: "cheque", currency_code: "BRL" }
       ]
 
       expect {
@@ -50,7 +50,7 @@ RSpec.describe "Operations API", type: :request do
   describe "POST /api/v1/operations" do
     it "cria e liquida operação atomicamente persistindo no banco" do
       receivables_payload = [
-        { identifier: "DUP-002", face_value: 1000.00, due_date: (Date.today + 30.days).to_s, receivable_type_code: "duplicata", currency_code: "BRL" }
+        { identifier: "DUP-002", face_value: 1000.00, due_date: (Date.current + 30.days).to_s, receivable_type_code: "duplicata", currency_code: "BRL" }
       ]
 
       perform_enqueued_jobs do
@@ -82,8 +82,8 @@ RSpec.describe "Operations API", type: :request do
 
     it "cria operação e depois falha na liquidação se houver dados inválidos" do
       receivables_payload = [
-        { identifier: "DUP-GOOD", face_value: 1000.00, due_date: (Date.today + 30.days).to_s, receivable_type_code: "duplicata", currency_code: "BRL" },
-        { identifier: "DUP-BAD", face_value: -500.00, due_date: (Date.today + 30.days).to_s, receivable_type_code: "duplicata", currency_code: "BRL" } # face value negativo inválido
+        { identifier: "DUP-GOOD", face_value: 1000.00, due_date: (Date.current + 30.days).to_s, receivable_type_code: "duplicata", currency_code: "BRL" },
+        { identifier: "DUP-BAD", face_value: -500.00, due_date: (Date.current + 30.days).to_s, receivable_type_code: "duplicata", currency_code: "BRL" } # face value negativo inválido
       ]
 
       perform_enqueued_jobs do
