@@ -61,32 +61,31 @@ module Api
         render json: data
       end
 
-      # POST /api/v1/operations (Liquidation inside ACID transaction)
+      # POST /api/v1/operations (Asynchronous Liquidation)
       def create
-        # 1. Run calculations through Strategy Pattern Pricing Engine
-        data = PricingEngine::Calculator.calculate_operation(
-          assignee: operation_params[:assignee],
-          payment_currency_code: operation_params[:payment_currency_code],
-          receivables: (operation_params[:receivables] || []).map(&:to_h),
-          base_rate: operation_params[:base_rate] || 0.0
-        )
+        # 1. Resolve payment currency
+        currency = Currency.find_by!(code: operation_params[:payment_currency_code])
 
-        # 2. Build the ActiveRecord objects
+        # 2. Build pending operation
         @operation = Operation.new(
-          assignee: data[:assignee],
-          payment_currency_id: data[:payment_currency_id],
-          total_face_value: data[:total_face_value],
-          total_net_value: data[:total_net_value]
+          assignee: operation_params[:assignee],
+          payment_currency: currency,
+          total_face_value: 0.0,
+          total_net_value: 0.0,
+          status: "pending"
         )
 
-        data[:receivables_attributes].each do |rec_attr|
-          @operation.receivables.build(rec_attr.except(:net_value_original))
-        end
-
-        # 3. Save inside a database transaction to ensure ACID atomic property
+        # 3. Save pending operation record
         ActiveRecord::Base.transaction do
           @operation.save!
         end
+
+        # 4. Enqueue background settlement job
+        SettleOperationJob.perform_later(
+          @operation.id,
+          operation_params[:base_rate] || 0.0,
+          (operation_params[:receivables] || []).map(&:to_h)
+        )
 
         render json: @operation.as_json(
           include: {
