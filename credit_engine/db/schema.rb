@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_08_142500) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_08_170100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -72,6 +72,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_142500) do
     t.index ["currency_id"], name: "index_receivables_on_currency_id"
     t.index ["operation_id"], name: "index_receivables_on_operation_id"
     t.index ["receivable_type_id"], name: "index_receivables_on_receivable_type_id"
+  end
+
+  create_table "settlement_reports", force: :cascade do |t|
+    t.string "assignee_filter"
+    t.datetime "created_at", null: false
+    t.text "csv_content"
+    t.string "end_date_filter"
+    t.string "file_name"
+    t.string "payment_currency_code_filter"
+    t.string "start_date_filter"
+    t.string "status", default: "pending", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "exchange_rates", "currencies", column: "from_currency_id"

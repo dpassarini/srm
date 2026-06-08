@@ -19,6 +19,11 @@ Rails.application.routes.draw do
           post :simulate
         end
       end
+      resources :settlement_reports, only: [ :index, :create ] do
+        member do
+          get :download
+        end
+      end
     end
   end
 end
