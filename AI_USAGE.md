@@ -14,6 +14,8 @@ Este documento descreve como a inteligência artificial foi utilizada como co-pi
     *   *Prompt:* "Corrija o erro 'Error: in 18+, these Docker images are configured to store database data in a format which is compatible with pg_ctlcluster' no PostgreSQL 18 ao usar o Docker Compose."
 *   **Processamento Assíncrono com Sidekiq:**
     *   *Prompt:* "Configure o Sidekiq no Docker Compose junto com o Rails para que a liquidação de lotes de recebíveis aconteça de forma assíncrona, definindo os serviços web e worker de forma isolada."
+*   **Documentação da API com Swagger (OpenAPI):**
+    *   *Prompt:* "Escreva um arquivo openapi.yaml completo documentando os 10 endpoints da API Rails do SRM Credit Engine, fornecendo schemas, exemplos de retorno e parâmetros para listagem, simulação, liquidação e download de relatórios de extrato."
 
 ---
 
@@ -33,7 +35,9 @@ Durante a codificação, o co-piloto cometeu alguns deslizes importantes que exi
 4.  **Integração de Fila no Ambiente de Testes:**
     *   *Problema:* Configurar o Active Job globalmente para usar o Sidekiq fez com que os testes de integração do RSpec tentassem se conectar ao Redis real para executar os jobs, quebrando os blocos de teste com `perform_enqueued_jobs`.
     *   *Correção:* Definição explícita de `config.active_job.queue_adapter = :test` em `config/environments/test.rb`.
-
+5.  **Interceptação de Rotas por Middleware de Arquivos Estáticos (Rack::Static):**
+    *   *Problema:* A IA recomendou um teste RSpec que esperava que a rota `GET /swagger` retornasse um redirecionamento HTTP (`302 Found`). No entanto, como criamos o diretório físico `public/swagger/` com um arquivo `index.html`, o middleware `ActionDispatch::Static` interceptou a requisição e serviu o arquivo diretamente como `200 OK`, fazendo o teste de redirecionamento falhar.
+    *   *Correção:* O teste foi corrigido para esperar um status `200 OK` ao acessar `GET /swagger`, mantendo a expectativa de redirecionamento apenas na rota virtual `/api-docs`.
 
 ---
 
@@ -42,7 +46,9 @@ Durante a codificação, o co-piloto cometeu alguns deslizes importantes que exi
 *   **Onde a IA economizou tempo?**
     *   Forte aceleração na criação das cascas físicas do HTML e componentes em Tailwind v4 + React (Vite). Mapear classes de CSS com design Glassmorphism e Dark Mode direto no código de React economizou várias horas de escrita manual.
     *   Aceleração no mapeamento de migrations e tabelas normalizadas do ActiveRecord.
+    *   Geração rápida e precisa de uma especificação OpenAPI 3.0.3 bem-estruturada em YAML, mapeando fielmente todos os campos de response e payloads complexos.
 *   **Onde a IA atrapalhou ou exigiu cuidado extra?**
     *   Problemas de consistência nas chaves de hashes de serviços acopladas ao banco de dados.
     *   Erros em relação ao ciclo de vida e concorrência de inicialização do Docker/Postgres (como o erro de pasta de dados da versão 18+ do Postgres e concorrência de banco no rails).
     *   A IA tendeu a gerar testes em frameworks mistos, exigindo intervenção explícita para focar apenas em RSpec idiomático e limpo.
+    *   Omissão de como o middleware de arquivos estáticos do Rails interage com rotas virtuais de mesmo nome (como o caso do `/swagger`).

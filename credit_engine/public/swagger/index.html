@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="SRM Credit Engine API Documentation" />
+    <title>SRM Credit Engine - API Documentation</title>
+    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.17.14/swagger-ui.css" />
+    <link rel="icon" type="image/png" href="../icon.png" />
+    <style>
+      html {
+        box-sizing: border-box;
+        overflow: -moz-scrollbars-vertical;
+        overflow-y: scroll;
+      }
+
+      *, *:before, *:after {
+        box-sizing: inherit;
+      }
+
+      body {
+        margin: 0;
+        background: #0f172a; /* Sleek dark slate background */
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      /* Custom styling to match modern dark theme */
+      .swagger-ui {
+        background-color: #0f172a;
+        color: #f1f5f9;
+        padding-bottom: 2rem;
+      }
+
+      .swagger-ui .topbar {
+        background-color: #1e293b;
+        border-bottom: 1px solid #334155;
+      }
+
+      .swagger-ui .info .title {
+        color: #f8fafc;
+      }
+
+      .swagger-ui .info p, .swagger-ui .info li, .swagger-ui .info table {
+        color: #cbd5e1;
+      }
+
+      .swagger-ui a.nostyle {
+        color: #f8fafc;
+      }
+
+      .swagger-ui .scheme-container {
+        background-color: #1e293b;
+        border-top: 1px solid #334155;
+        border-bottom: 1px solid #334155;
+        box-shadow: none;
+      }
+
+      .swagger-ui select {
+        background-color: #0f172a;
+        color: #f8fafc;
+        border: 1px solid #475569;
+      }
+
+      .swagger-ui .opblock .opblock-summary-path {
+        color: #f8fafc;
+      }
+
+      .swagger-ui .opblock .opblock-summary-description {
+        color: #cbd5e1;
+      }
+
+      .swagger-ui .opblock-description-wrapper p {
+        color: #cbd5e1;
+      }
+
+      .swagger-ui .tabli button {
+        color: #94a3b8;
+      }
+
+      .swagger-ui .tabli.active button {
+        color: #38bdf8;
+      }
+
+      .swagger-ui .response-col_status {
+        color: #f8fafc;
+      }
+
+      .swagger-ui .response-col_links {
+        color: #cbd5e1;
+      }
+
+      .swagger-ui .parameter__name {
+        color: #e2e8f0;
+      }
+
+      .swagger-ui .parameter__type {
+        color: #38bdf8;
+      }
+
+      .swagger-ui .parameter__in {
+        color: #94a3b8;
+      }
+
+      .swagger-ui .opblock.opblock-post {
+        background: rgba(16, 185, 129, 0.05);
+        border-color: #10b981;
+      }
+
+      .swagger-ui .opblock.opblock-get {
+        background: rgba(59, 130, 246, 0.05);
+        border-color: #3b82f6;
+      }
+
+      .swagger-ui .btn.authorize {
+        color: #10b981;
+        border-color: #10b981;
+      }
+
+      .swagger-ui .btn.authorize svg {
+        fill: #10b981;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="swagger-ui"></div>
+    <script src="https://unpkg.com/swagger-ui-dist@5.17.14/swagger-ui-bundle.js" charset="UTF-8"></script>
+    <script src="https://unpkg.com/swagger-ui-dist@5.17.14/swagger-ui-standalone-preset.js" charset="UTF-8"></script>
+    <script>
+      window.onload = () => {
+        window.ui = SwaggerUIBundle({
+          url: './openapi.yaml',
+          dom_id: '#swagger-ui',
+          deepLinking: true,
+          presets: [
+            SwaggerUIBundle.presets.apis,
+            SwaggerUIStandalonePreset
+          ],
+          layout: "StandaloneLayout",
+          persistenceAuthorization: true,
+          displayRequestDuration: true,
+          defaultModelsExpandDepth: 2,
+          defaultModelExpandDepth: 2
+        });
+      };
+    </script>
+  </body>
+</html>

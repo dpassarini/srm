@@ -223,3 +223,7 @@ export const createSettlementReport = async (
 export const getReportDownloadUrl = (reportId: number): string => {
   return `${api.defaults.baseURL}/settlement_reports/${reportId}/download`;
 };
+
+export const getSwaggerUrl = (): string => {
+  return (api.defaults.baseURL || API_URL).replace("/api/v1", "/swagger");
+};
