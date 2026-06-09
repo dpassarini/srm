@@ -10,6 +10,7 @@ import {
   getSettlementReports,
   createSettlementReport,
   getReportDownloadUrl,
+  getSwaggerUrl,
   type Currency,
   type ReceivableType,
   type ExchangeRate,
@@ -348,9 +349,20 @@ export default function App() {
             <Calculator className="h-8 w-8 text-white" />
           </div>
           <div>
-            <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-blue-400 via-indigo-200 to-purple-400 bg-clip-text text-transparent">
-              SRM Credit Engine
-            </h1>
+            <div className="flex items-center gap-3">
+              <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-blue-400 via-indigo-200 to-purple-400 bg-clip-text text-transparent">
+                SRM Credit Engine
+              </h1>
+              <a
+                href={getSwaggerUrl()}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-1 bg-slate-900/80 hover:bg-slate-800 text-slate-400 hover:text-blue-400 border border-slate-850 rounded-lg px-2.5 py-1 text-[10px] font-bold transition-all duration-200 shadow-sm"
+              >
+                <FileText className="h-3.5 w-3.5" />
+                API Docs
+              </a>
+            </div>
             <p className="text-xs text-slate-400 mt-1">Plataforma de Cessão de Crédito Multimoedas</p>
           </div>
         </div>

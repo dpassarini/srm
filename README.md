@@ -45,8 +45,23 @@ Os **seeds** incluem:
 ### 3. Acessar as Aplicações
 Após os containers estarem saudáveis (`status: healthy` ou `Up`), acesse nos navegadores:
 
-- **Painel do Operador (Frontend)**: [http://localhost:5173](http://localhost:5173)
+- **Painel do Operador (Frontend)**: [http://localhost:5173](http://localhost:5173) (inclui atalho para "API Docs" no cabeçalho)
 - **API Playground/Health Check (Backend)**: [http://localhost:3000](http://localhost:3000)
+- **Documentação da API (Swagger UI)**: [http://localhost:3000/swagger](http://localhost:3000/swagger) ou [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+
+---
+
+## 📖 Documentação da API (Swagger / OpenAPI)
+
+A API do backend foi inteiramente documentada seguindo o padrão **OpenAPI 3.0.3**. 
+
+### Como Acessar a Documentação Interativa:
+Com todo o ambiente ativo, você pode explorar as rotas de moedas, taxas cambiais, simulação e liquidação das seguintes maneiras:
+1. **Pelo Frontend**: Clique no botão **"API Docs"** posicionado no cabeçalho do Painel do Operador.
+2. **Diretamente pelo Navegador**: Acesse o endereço [http://localhost:3000/swagger](http://localhost:3000/swagger) (ou o atalho [http://localhost:3000/api-docs](http://localhost:3000/api-docs)).
+
+*   **Arquivo de Especificação**: [openapi.yaml](file:///home/dpassarini/Prototipos/srm/credit_engine/public/swagger/openapi.yaml)
+*   **Interface Customizada**: [index.html](file:///home/dpassarini/Prototipos/srm/credit_engine/public/swagger/index.html) (Tema escuro customizado usando Swagger UI CDN)
 
 ---
 
