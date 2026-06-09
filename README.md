@@ -103,4 +103,5 @@ O projeto conta com um workflow do GitHub Actions configurado em [ci.yml](file:/
 - [/frontend](file:///home/dpassarini/Prototipos/srm/frontend) — Código-fonte do frontend em React/TypeScript com Tailwind CSS v4.
 - [docker-compose.yml](file:///home/dpassarini/Prototipos/srm/docker-compose.yml) — Arquivo de orquestração do ambiente.
 - [modelagem.md](file:///home/dpassarini/Prototipos/srm/modelagem.md) — Diagrama e documentação detalhada da modelagem do banco de dados (Entidade-Relacionamento em Mermaid).
+- [docs/adr.md](docs/adr.md) — Registro de Decisões de Arquitetura (ADR) justificando as principais decisões técnicas e escolhas de escalabilidade.
 - [AI_USAGE.md](file:///home/dpassarini/Prototipos/srm/AI_USAGE.md) — Relatório de uso de Inteligência Artificial como co-piloto de desenvolvimento, detalhando decisões de engenharia e mitigações aplicadas.
