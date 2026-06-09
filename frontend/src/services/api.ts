@@ -225,5 +225,5 @@ export const getReportDownloadUrl = (reportId: number): string => {
 };
 
 export const getSwaggerUrl = (): string => {
-  return (api.defaults.baseURL || API_URL).replace("/api/v1", "/swagger");
+  return (api.defaults.baseURL || API_URL).replace(/\/$/, "").replace("/api/v1", "/swagger/index.html");
 };
